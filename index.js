@@ -24,19 +24,19 @@ function VeraLinkPlatform(log, config)
     this.log        = log;
     this.rooms      = {};
     this.HAPNode     = {'request':request, 'uuid':uuid, 'Accessory':Accessory, 'Service':Service, 'Characteristic':Characteristic, 'debug':debug, 'hashing':hashing, 'return': true};
-    
-    defaults = {'bridged': true,'includesensor': false, 'dimmertest': false, 'ignorerooms': [], 'ignoredevices': [], 'securitypoll': 2000};
-    
+
+    defaults = {'bridged': true,'includesensor': false, 'ignorerooms': [], 'ignoredevices': [], 'securitypoll': 2000};
+
     Veraconfig = merge_options(defaults, Veraconfig);
     Veraconfig = merge_options(Veraconfig,config);
-    
+
     if(typeof config.veraIP === "undefined")
     {
         console.log("\033[31m No configuration found, please write your configuration on .homebridge/config.json \033[0m");
         console.log("\033[31m or add your configuration file to "+home+"/.veralink/config.js \033[0m");
         process.exit();
     }
-    
+
     this.functions   = require('./lib/functions.js')(this.HAPNode,Veraconfig);
     this.verainfo = null;
 }
@@ -52,7 +52,7 @@ VeraLinkPlatform.prototype = {
         })
     },
     accessories: function(callback)
-    { 
+    {
         var that = this;
         this.getVeraInfo().done(function(verainfo) {
             var foundAccessories = [];
@@ -83,7 +83,7 @@ function loadconfig()
     home = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
     try {
         fs.accessSync(home+'/.veralink', fs.F_OK);
-        
+
         try {
             fs.accessSync(home+'/.veralink/config.js', fs.F_OK);
             return require('./config.js');

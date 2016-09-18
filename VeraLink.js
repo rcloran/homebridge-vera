@@ -1,4 +1,4 @@
-/* 
+/*
  * VeraLink v0.1
  * Damian Alarcon
  * Dec 2015
@@ -42,7 +42,7 @@ async.series([
                         if(typeof data === 'object' && data !== null)
                         {
                             listsrooms = data.rooms;
-                            
+
                             return true;
                         }
                         else
@@ -61,19 +61,19 @@ async.series([
                   },
                   bridged: {
                     description: 'Bridged mode (Set to false to use single server for each device instead of one for each room)',
-                    type: 'boolean', 
+                    type: 'boolean',
                     message: 'Enter "true" or "false"',
                     default: 'true',
                     required: true,
                     conform: function(){
                         listsrooms.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);} );
-                            
+
                         for(var i = 0; i < listsrooms.length;i++)
                         {
                             roomvar += listsrooms[i].id+' - '+listsrooms[i].name+"\n";
                             lookup[listsrooms[i].id] = listsrooms[i];
                         }
-                        
+
                         console.log('Room list: \n'+roomvar);
                         return true;
                     }
@@ -159,7 +159,7 @@ async.series([
                 }
                 console.log('\tignorerooms: ' + roomarr);
 
-                data = "module.exports = {\n\tveraIP:  '"+result.VeraIP+"',\n\thapport: "+result.happort+",\n\tcardinality: 0,\n\tbridged: "+result.bridged+",\n\tignorerooms: ["+roomarr+"],\n\tincludesensor: true,\n\tpincode: '031-45-154',\n\tdimmertest: false,\n\tmainHNpath: './node_modules/hap-nodejs'\n};";
+                data = "module.exports = {\n\tveraIP:  '"+result.VeraIP+"',\n\thapport: "+result.happort+",\n\tcardinality: 0,\n\tbridged: "+result.bridged+",\n\tignorerooms: ["+roomarr+"],\n\tincludesensor: true,\n\tpincode: '031-45-154',\n\tmainHNpath: './node_modules/hap-nodejs'\n};";
 
                 fs.writeFile('./config.js', data, { flag: 'wx' }, function (err) {
                     if (err) throw err;
@@ -186,9 +186,9 @@ async.series([
         var storage         = require(config.mainHNpath+'/node_modules/node-persist/node-persist.js');
         var hashing         = require("create-hash");
         var debug           = require("debug")('VeraLink');
-        
+
         var HAPNode = {'request':request, 'storage':storage, 'uuid':uuid, 'Bridge':Bridge, 'Accessory':Accessory, 'accessoryLoader':AccessoryLoader, 'hashing':hashing, 'Service':Service, 'Characteristic':Characteristic, 'debug':debug};
-        var functions       = require('./lib/functions.js')(HAPNode,config); 
+        var functions       = require('./lib/functions.js')(HAPNode,config);
         console.log("HAP-NodeJS starting...");
 
         // Initialize our storage system
